@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lời chúc</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playpen+Sans:wght@100..800&display=swap" rel="stylesheet">
+  <link rel="icon" href="https://github.com/Panbap/anh/blob/main/icon1.png?raw=true" type="image/png" />
+
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      overflow-x: hidden;
+    }
+
+    body {
+      margin: 0;
+      padding: 20px 10px;
+      background-color: #ffe6f0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: "Playpen Sans", cursive;
+    }
+
+    .text-box {
+      font-family: "Playpen Sans", cursive;
+      width: 600px;
+      font-weight: 600;
+      max-width: 600px;
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+      color: #d3485f;
+      font-size: 22px;
+      line-height: 1.6;
+    }
+
+    .left {
+      text-align: left;
+    }
+
+    .center {
+      text-align: center;
+    }
+
+    .right {
+      text-align: right;
+    }
+
+    .cursor {
+      display: inline-block;
+      width: 8px;
+      height: 24px;
+      background: #cc0066;
+      margin-left: 4px;
+      animation: blink 1s step-end infinite;
+    }
+
+    @keyframes blink {
+
+      0%,
+      100% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: 0;
+      }
+    }
+
+    .image-container {
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .image-container img {
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 2px solid transparent;
+      box-shadow: 0 8px 15px rgba(204, 0, 102, 0.4);
+      animation: spin 4s linear infinite;
+      backface-visibility: hidden;
+    }
+
+    /* @keyframes spin {
+      from {
+        transform: rotate(0deg);
+      }
+
+      to {
+        transform: rotate(360deg);
+      }
+    } */
+
+    @media (max-width: 600px) {
+      .sidebar.active {
+        width: 60vw;
+      }
+
+      body {
+        height: auto;
+        padding: 20px 10px;
+      }
+
+      .text-box {
+        width: 320px;
+        max-width: 320px;
+        padding: 20px;
+        font-size: 18px;
+        margin: 10px;
+      }
+
+      .image-container img {
+        width: 100px;
+        height: 100px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+
+    <div class="text-box" id="textBox">
+      <!-- Các dòng sẽ tạo động ở đây -->
+    </div>
+    <div class="image-container">
+      <img src="./assets/cake.gif" alt="anh">
+    </div>
+  </div>
+
+  <script>
+
+    const lines = [
+      { text: "Trúc à,", align: "left" },
+      { text: "Sinh nhật dui dẻ nha, em chờ ngày này lâu lắm rồi, chờ từ lúc biết được ngày này, từ lúc được gặp Trúc, được nói chuyện với Trúc, được đi chơi chơi với Trúc.", align: "left" },
+      { text: "Cảm ơn Trúc, vì đã dành thời gian cho em, cũng cảm ơn vì đã xuất hiện trong cuộc đời em. Cũng xin lỗi nữa, đôi khi làm cổ phải buồn mấy chuyện hông đáng có, đôi khi bắt cổ đợi nhiều việc nữa.", align: "left" },
+      { text: "Quá tệ, nhưng cổ vẫn ở đây với em, em cảm ơn Trúc nhiều lắm. Tặng cổ 1 điều ước trong khả năng của em. Cổ muốn gì em cũng sẽ ráng thực hiện được, chỉ cần cổ muốn thì em sẽ ráng. ", align: "center" },
+      { text: "Yêu Trúc ❤️", align: "right" },
+    ];
+
+    const container = document.getElementById('textBox');
+
+    function createLineElement(text, align) {
+      const div = document.createElement('div');
+      div.className = align;
+      div.dataset.fullText = text;
+      div.textContent = '';
+      return div;
+    }
+
+    const lineElements = lines.map(line => createLineElement(line.text, line.align));
+    lineElements.forEach(el => container.appendChild(el));
+
+    let lineIndex = 0;
+    let charIndex = 0;
+
+    function typeLine() {
+      if (lineIndex >= lineElements.length) return;
+
+      const lineEl = lineElements[lineIndex];
+      const fullText = lineEl.dataset.fullText;
+
+      if (charIndex <= fullText.length) {
+        lineEl.textContent = fullText.substring(0, charIndex) + (charIndex < fullText.length ? '|' : '');
+        charIndex++;
+        setTimeout(typeLine, 50);
+      } else {
+        lineEl.textContent = fullText;
+        lineIndex++;
+        charIndex = 0;
+        setTimeout(typeLine, 400);
+      }
+    }
+
+    typeLine();
+  </script>
+
+</body>
+
+</html>
